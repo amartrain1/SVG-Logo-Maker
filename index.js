@@ -1,5 +1,12 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
+const { Square, Circle, Triangle } = require('./lib/shapes.js')
+
+// logoMaker = (shape) => {
+//     if (data.shape == 'Square') {
+
+//     }
+// }
 
 inquirer
     .prompt([
@@ -9,6 +16,7 @@ inquirer
             name: 'logoText',
             message: 'Which letters would you like on your logo?',
             // check to be sure the input is at least 1 character long, and not longer than 3 characters
+            //! used ChatGPT to help understand how to use validate in inquirer prompts
             validate: function (value) {
                 if (value.length > 3) {
                     return 'Input must be 3 characters or less.';
@@ -29,13 +37,19 @@ inquirer
         {
             type: 'list',
             name: 'logoShape',
-            choices: ['square', 'circle', 'triangle'],
+            choices: ['Square', 'Circle', 'Triangle'],
             message: 'Please select a shape for your logo.'
         },
         // prompt the user for logo color, specifying only keywords or hexadecimal codes
         {
             type: 'input',
-            name: 'shapeColor',
+            name: 'logoColor',
             message: 'What color would you like your logo to be? (input must be a keyword or a hexadecimal code)'
         }
     ])
+    .then((data) => {
+        fs.writeFile('./example/logo.svg', 
+        ` <svg width="300" height="200" fill="white" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        ${logoMaker(data.logoShape)}
+        </svg>`, (err) => err ? console.log(`Error: ${err}`) : console.log("File 'logo.svg' created successfully."))
+    });
