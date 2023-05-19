@@ -2,11 +2,12 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 const { Square, Circle, Triangle } = require('./lib/shapes.js')
 
-// logoMaker = (shape) => {
-//     if (data.shape == 'Square') {
-
-//     }
-// }
+logoMaker = (data) => {
+    if (data.shape == 'Square') {
+        const shape = new Square;
+        return shape.drawSquare()
+    }
+}
 
 inquirer
     .prompt([
@@ -47,6 +48,7 @@ inquirer
             message: 'What color would you like your logo to be? (input must be a keyword or a hexadecimal code)'
         }
     ])
+    // .then((data) => console.log(data.logoShape))
     .then((data) => {
         fs.writeFile('./example/logo.svg', 
         ` <svg width="300" height="200" fill="white" version="1.1" xmlns="http://www.w3.org/2000/svg">
